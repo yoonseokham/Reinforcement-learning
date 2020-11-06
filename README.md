@@ -8,6 +8,7 @@
 
 ### 3.Lunar Lander
 <img src="https://raw.githubusercontent.com/ha-mulan/Reinforcement-learning/master/gif/LunarLander.gif">
+
 * actionSpace  
   * 아무 부스터도 쓰지않는다.  
   * 좌,우,하 를 향한 부스터를 쓰는 조합  

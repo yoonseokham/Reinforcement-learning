@@ -24,6 +24,7 @@ from collections import namedtuple
 import warnings
 import time
 import torch.nn.functional as F
+from frameSave import save_frames_as_gif
 model = torch.load("pth/MountainCar.pth")
 model.eval()
 ENV = 'MountainCar-v0'
@@ -32,6 +33,7 @@ observation = env.reset()
 state=observation
 state=torch.from_numpy(state).type(torch.FloatTensor)
 state=torch.unsqueeze(state,0)
+frames=[]
 for i in range(200):
     with torch.no_grad():
         model.eval()
@@ -46,7 +48,8 @@ for i in range(200):
                         torch.FloatTensor)  # numpy 변수를 파이토치 텐서로 변환
             state_next = torch.unsqueeze(state_next, 0)
         state = state_next
-    env.render()
+    frames.append(env.render(mode="rgb_array"))
     time.sleep(0.01)
     # print(i)
 env.close()
+save_frames_as_gif(frames,filename='MountainCar.gif')

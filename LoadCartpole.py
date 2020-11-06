@@ -7,6 +7,7 @@ import torch
 from torch import nn
 from torch import optim
 
+from frameSave import save_frames_as_gif
 from collections import namedtuple
 import warnings
 import time
@@ -19,6 +20,8 @@ observation = env.reset()
 state=observation
 state=torch.from_numpy(state).type(torch.FloatTensor)
 state=torch.unsqueeze(state,0)
+frames = []
+
 for i in range(200):
     with torch.no_grad():
         model.eval()
@@ -33,7 +36,9 @@ for i in range(200):
                         torch.FloatTensor)  # numpy 변수를 파이토치 텐서로 변환
             state_next = torch.unsqueeze(state_next, 0)
         state = state_next
-    env.render()
+    # env.render()
+    frames.append(env.render(mode="rgb_array"))
     time.sleep(0.01)
     # print(i)
 env.close()
+save_frames_as_gif(frames,filename='CartPole.gif')

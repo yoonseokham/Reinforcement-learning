@@ -9,6 +9,6 @@
 ### 3.Lunar Lander
 <img src="https://raw.githubusercontent.com/ha-mulan/Reinforcement-learning/master/gif/LunarLander.gif">
 
-_ rewardFunction 
-   _ spaceShip의 x축 가속도와 y축 가속도를 원소로 가지는 벡터와 spaceShip의 위치벡터의 코사인 유사도 가 높으면 높은 보상
-   _ spaceShip의 각속도가 낮을수록 높은보상
+* rewardFunction 
+   * spaceShip의 x축 가속도와 y축 가속도를 원소로 가지는 벡터와 spaceShip의 위치벡터의 코사인 유사도 가 높으면 높은 보상
+   * spaceShip의 각속도가 낮을수록 높은보상

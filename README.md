@@ -1,10 +1,14 @@
 # Reinforcement-learning
-## Dueling DQN으로 구현한 CartPole,MountainCar,LunraLander입니다.
+## Dueling DQN으로 해결한 CartPole,MountainCar,LunraLander environment
 ### 1.CartPole
 <img src="https://raw.githubusercontent.com/ha-mulan/Reinforcement-learning/master/gif/CartPole.gif"> 
 
+* cart를 좌우로 움직여서 막대기가 아래로 떨어지지 않게 하는 문제
+
 ### 2. MountainCar
 <img src="https://raw.githubusercontent.com/ha-mulan/Reinforcement-learning/master/gif/MountainCar.gif">  
+
+* 협곡에 빠진 자동차를 꺼내는 문제 
 
 ### 3.Lunar Lander
 <img src="https://raw.githubusercontent.com/ha-mulan/Reinforcement-learning/master/gif/LunarLander.gif">

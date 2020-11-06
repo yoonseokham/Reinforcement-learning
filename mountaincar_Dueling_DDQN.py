@@ -12,6 +12,7 @@ import warnings
 import time
 import torch.nn.functional as F
 warnings.filterwarnings("ignore", category=UserWarning)
+<<<<<<< HEAD
 torch.cuda.get_device_name(0)
 torch.cuda.is_available()
 torch.__version__
@@ -21,11 +22,20 @@ ENV = 'MountainCar-v0'  # 태스크 이름
 GAMMA = 0.999  # 시간할인율
 MAX_STEPS = 200  # 1에피소드 당 최대 단계 수
 NUM_EPISODES = 500  # 최대 에피소드 수
+=======
+# 상수 정의
+ENV = 'CartPole-v0'
+# ENV = 'MountainCar-v0'  # 태스크 이름
+GAMMA = 0.999  # 시간할인율
+MAX_STEPS = 200  # 1에피소드 당 최대 단계 수
+NUM_EPISODES = 400  # 최대 에피소드 수
+>>>>>>> 5c957aadf0c5a0006a8d2d9de8d9e32f646208dc
 BATCH_SIZE=32
 env=gym.make(ENV)
 print(env.observation_space)
 num_states = env.observation_space.shape[0]  # 태스크의 상태 변수 수(2)를 받아옴
 num_actions = env.action_space.n  # 태스크의 행동 가짓수(3)를 받아옴
+<<<<<<< HEAD
 # model_m=Net(num_states,32,num_actions)
 model_m = torch.load("pth/MountainCar.pth")
 model_m.optimizer=optim.Adam(model_m.parameters(),lr=0.0001)
@@ -35,13 +45,26 @@ model_t.optimizer=optim.Adam(model_m.parameters(),lr=0.0001)
 Transition=namedtuple('Transition',('state','action','next_state','reward'))
 # torch.set_default_tensor_type('torch.cuda.FloatTensor')
 # cudnn.benchmark = True
+=======
+model_m=Net(num_states,32,num_actions)
+model_m.optimizer=optim.Adam(model_m.parameters(),lr=0.0001)
+
+model_t=Net(num_states,32,num_actions)
+model_t.optimizer=optim.Adam(model_m.parameters(),lr=0.0001)
+Transition=namedtuple('Transition',('state','action','next_state','reward'))
+
+>>>>>>> 5c957aadf0c5a0006a8d2d9de8d9e32f646208dc
 def get_action(state,episode):
     epsilion=(1/(episode+1))
     if epsilion<=np.random.uniform(0,1):
         with torch.no_grad():
             model_m.eval()
 
+<<<<<<< HEAD
             action=model_m(state ).max(1)[1].view(1,1)
+=======
+            action=model_m(state).max(1)[1].view(1,1)
+>>>>>>> 5c957aadf0c5a0006a8d2d9de8d9e32f646208dc
             '''
             state가 [1,num_states]이므로 model(state)의 결과는 당연히
             [1,num_states]이 되고 거기다가 max(1)[1]을 하면 열원소중 가장큰 원소의 인덱스를 가지는
@@ -52,7 +75,11 @@ def get_action(state,episode):
         action=torch.LongTensor([[random.randrange(num_actions)]])
     #action의 shape은 [1,1]
     return action
+<<<<<<< HEAD
 def replay():
+=======
+def replay(fast_end):
+>>>>>>> 5c957aadf0c5a0006a8d2d9de8d9e32f646208dc
     if len(Transition_mem)<32:
         print("too small Transition")
         return
@@ -138,6 +165,10 @@ class mem:
 Transition_mem=mem()
 count=0
 for i in range(NUM_EPISODES):
+<<<<<<< HEAD
+=======
+    fast_end=False
+>>>>>>> 5c957aadf0c5a0006a8d2d9de8d9e32f646208dc
     total_reward=0
     observation = env.reset()
     state=torch.from_numpy(observation).type(torch.FloatTensor)
@@ -152,6 +183,7 @@ for i in range(NUM_EPISODES):
     # if count==15:
         # break
     for j in range(MAX_STEPS):
+<<<<<<< HEAD
         action=get_action(state,i)
         observation_next,reward,done,_=env.step(action.item())
         # total_reward += reward
@@ -190,13 +222,41 @@ for i in range(NUM_EPISODES):
             print("steps:",j)
             print("total reward:",total_reward)
             break
+=======
+            action=get_action(state,i)
+            observation_next,reward,done,_=env.step(action.item())
+            if done==True:
+                next_state=None
+                if j>=198:
+                    reward=torch.Tensor([1.0])
+                else:
+                    fast_end=True
+                    reward=torch.Tensor([-1.0])
+            else:
+                reward=torch.Tensor([0.0])
+                next_state=torch.from_numpy(observation_next).type(torch.FloatTensor)
+                next_state=torch.unsqueeze(next_state,0)
+            total_reward+=reward
+            Transition_mem.push(state,action,next_state,reward)
+            #
+            replay(fast_end)
+            #
+            state=next_state
+            if done ==True:
+                print("steps:",j)
+                print("total reward:",total_reward)
+                break
+>>>>>>> 5c957aadf0c5a0006a8d2d9de8d9e32f646208dc
 
 # for j in range(3):
 observation = env.reset()
 state=observation
 state=torch.from_numpy(state).type(torch.FloatTensor)
 state=torch.unsqueeze(state,0)
+<<<<<<< HEAD
 torch.save(model_m, "pth/MountainCar.pth")
+=======
+>>>>>>> 5c957aadf0c5a0006a8d2d9de8d9e32f646208dc
 # env.monitor.start('/tmp/cartpole-experiment-1', force=True)
 for i in range(200):
         # env.render()
@@ -206,7 +266,10 @@ for i in range(200):
         observation_next, _, done, _ = env.step(
                     action.item())
         if done:
+<<<<<<< HEAD
             print("on eval",i,"steps")
+=======
+>>>>>>> 5c957aadf0c5a0006a8d2d9de8d9e32f646208dc
             break
         else:
             state_next = observation_next  # 관측 결과를 그대로 상태로 사용

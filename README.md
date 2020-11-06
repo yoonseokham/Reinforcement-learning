@@ -11,6 +11,7 @@
 * 협곡에 빠진 자동차를 꺼내는 문제 
 
 ### 3.Lunar Lander
+* spaceShip을 깃발사이에 안전하게 착지시키는 문제
 <img src="https://raw.githubusercontent.com/ha-mulan/Reinforcement-learning/master/gif/LunarLander.gif">
 
 * actionSpace  
